@@ -1,6 +1,6 @@
 <?php
 
-include_once $_SERVER["DOCUMENT_ROOT"] . "/CasoEstudioMN/Models/CasasModel.php";
+include_once $_SERVER["DOCUMENT_ROOT"] . "/CasoEstudioMN-main/Models/CasasModel.php";
 
 function ConsultarCasas()
 {
@@ -27,7 +27,7 @@ if (isset($_POST["btnAlquilar"]))
 
     if ($result)
     {
-        header("Location: /CasoEstudioMN/Views/vCasas/consultarCasas.php");
+        header("Location: /CasoEstudioMN-main/Views/vCasas/consultarCasas.php");
         exit;
     }
     else
