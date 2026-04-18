@@ -56,8 +56,10 @@ function ObtenerPrecioCasaModel($idCasa)
     {
         $context = OpenDatabase();
 
-        $sp = "CALL SP_ObtenerPrecioCasa('$idCasa')";
-        $result = $context->query($sp);
+        $stmt = $context->prepare("CALL SP_ObtenerPrecioCasa(?)");
+        $stmt->bind_param("i", $idCasa);
+        $stmt->execute();
+        $result = $stmt->get_result();
 
         $datos = null;
         while ($fila = $result->fetch_assoc())
@@ -65,6 +67,7 @@ function ObtenerPrecioCasaModel($idCasa)
             $datos = $fila;
         }
 
+        $stmt->close();
         CloseDatabase($context);
         return $datos;
     }
@@ -80,9 +83,11 @@ function AlquilarCasaModel($idCasa, $usuarioAlquiler, $fechaAlquiler)
     {
         $context = OpenDatabase();
 
-        $sp = "CALL SP_AlquilarCasa('$idCasa', '$usuarioAlquiler', '$fechaAlquiler')";
-        $result = $context->query($sp);
+        $stmt = $context->prepare("CALL SP_AlquilarCasa(?, ?, ?)");
+        $stmt->bind_param("iss", $idCasa, $usuarioAlquiler, $fechaAlquiler);
+        $result = $stmt->execute();
 
+        $stmt->close();
         CloseDatabase($context);
         return $result;
     }

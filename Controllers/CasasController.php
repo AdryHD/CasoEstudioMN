@@ -19,19 +19,34 @@ function ObtenerPrecioCasa($idCasa)
 
 if (isset($_POST["btnAlquilar"]))
 {
-    $idCasa          = $_POST["IdCasa"];
-    $usuarioAlquiler = $_POST["UsuarioAlquiler"];
-    $fechaAlquiler   = date("Y-m-d H:i:s");
-
-    $result = AlquilarCasaModel($idCasa, $usuarioAlquiler, $fechaAlquiler);
-
-    if ($result)
+    // Validación de datos POST
+    if (empty($_POST["IdCasa"]) || empty($_POST["UsuarioAlquiler"]))
     {
-        header("Location: /CasoEstudioMN-main/Views/vCasas/consultarCasas.php");
-        exit;
+        $_POST["Mensaje"] = "Datos incompletos. Por favor, complete todos los campos.";
     }
     else
     {
-        $_POST["Mensaje"] = "La información no fue registrada correctamente";
+        $idCasa          = filter_var($_POST["IdCasa"], FILTER_VALIDATE_INT);
+        $usuarioAlquiler = trim($_POST["UsuarioAlquiler"]);
+        $fechaAlquiler   = date("Y-m-d H:i:s");
+
+        if ($idCasa === false)
+        {
+            $_POST["Mensaje"] = "ID de casa inválido.";
+        }
+        else
+        {
+            $result = AlquilarCasaModel($idCasa, $usuarioAlquiler, $fechaAlquiler);
+
+            if ($result)
+            {
+                header("Location: /CasoEstudioMN-main/Views/vCasas/consultarCasas.php");
+                exit;
+            }
+            else
+            {
+                $_POST["Mensaje"] = "La información no fue registrada correctamente";
+            }
+        }
     }
 }

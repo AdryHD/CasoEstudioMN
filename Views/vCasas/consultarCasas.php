@@ -46,8 +46,12 @@
                                     </thead>
                                     <tbody>
                                         <?php
-                                            // IMPORTANTE: Usamos foreach porque P1 devuelve un array
-                                            foreach ($datos as $fila) {
+                                            // Verificar si hay datos disponibles
+                                            if (empty($datos)) {
+                                                echo "<tr><td colspan='5' class='text-center'><p>No hay casas registradas.</p></td></tr>";
+                                            } else {
+                                                // IMPORTANTE: Usamos foreach porque P1 devuelve un array
+                                                foreach ($datos as $fila) {
                                                 
                                                 // Lógica de Estado (Badge verde = Disponible / rojo = Reservada)
                                                 $estado = "Disponible";
@@ -70,6 +74,7 @@
                                                 echo "<td><span class='" . $claseBadge . "'>" . $estado . "</span></td>";
                                                 echo "<td><p>" . $fecha . "</p></td>";
                                                 echo "</tr>";
+                                                }
                                             }
                                         ?>
                                     </tbody>
