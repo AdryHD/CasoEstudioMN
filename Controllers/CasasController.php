@@ -19,7 +19,6 @@ function ObtenerPrecioCasa($idCasa)
 
 if (isset($_POST["btnAlquilar"]))
 {
-    // Validación de datos POST
     if (empty($_POST["IdCasa"]) || empty($_POST["UsuarioAlquiler"]))
     {
         $_POST["Mensaje"] = "Datos incompletos. Por favor, complete todos los campos.";
