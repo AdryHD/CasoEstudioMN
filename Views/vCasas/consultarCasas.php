@@ -68,11 +68,11 @@
                                                          : "—";
 
                                                 echo "<tr>";
-                                                echo "<td><p>" . $fila["DescripcionCasa"] . "</p></td>";
+                                                echo "<td><p>" . htmlspecialchars($fila["DescripcionCasa"]) . "</p></td>";
                                                 echo "<td><p> ₡" . number_format($fila["PrecioCasa"], 2) . "</p></td>";
-                                                echo "<td><p>" . ($fila["UsuarioAlquiler"] ?? "N/A") . "</p></td>";
-                                                echo "<td><span class='" . $claseBadge . "'>" . $estado . "</span></td>";
-                                                echo "<td><p>" . $fecha . "</p></td>";
+                                                echo "<td><p>" . htmlspecialchars($fila["UsuarioAlquiler"] ?? "N/A") . "</p></td>";
+                                                echo "<td><span class='" . htmlspecialchars($claseBadge) . "'>" . htmlspecialchars($estado) . "</span></td>";
+                                                echo "<td><p>" . htmlspecialchars($fecha) . "</p></td>";
                                                 echo "</tr>";
                                                 }
                                             }
