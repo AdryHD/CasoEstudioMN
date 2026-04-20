@@ -1,6 +1,6 @@
 <?php
 
-include_once $_SERVER["DOCUMENT_ROOT"] . "/CasoEstudioMN-main/Models/CasasModel.php";
+include_once $_SERVER["DOCUMENT_ROOT"] . "/CasoEstudioMN/Models/CasasModel.php";
 
 function ConsultarCasas()
 {
@@ -19,7 +19,6 @@ function ObtenerPrecioCasa($idCasa)
 
 if (isset($_POST["btnAlquilar"]))
 {
-    // Validación de datos POST
     if (empty($_POST["IdCasa"]) || empty($_POST["UsuarioAlquiler"]))
     {
         $_POST["Mensaje"] = "Datos incompletos. Por favor, complete todos los campos.";
