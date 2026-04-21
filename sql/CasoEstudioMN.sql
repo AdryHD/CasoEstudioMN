@@ -38,14 +38,9 @@ BEGIN
         DescripcionCasa,
         PrecioCasa,
         UsuarioAlquiler,
-        CASE
-            WHEN UsuarioAlquiler IS NULL THEN 'Disponible'
-            ELSE 'Reservada'
-        END AS Estado,
-        DATE_FORMAT(FechaAlquiler, '%d/%m/%Y') AS FechaAlquiler
+        FechaAlquiler
     FROM CasasSistema
-    WHERE PrecioCasa BETWEEN 115000 AND 180000
-    ORDER BY (UsuarioAlquiler IS NOT NULL) ASC;
+    ORDER BY (UsuarioAlquiler IS NOT NULL) ASC, IdCasa ASC;
 END$$
 
 DROP PROCEDURE IF EXISTS SP_ObtenerCasasDisponibles$$
