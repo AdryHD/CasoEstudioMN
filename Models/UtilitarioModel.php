@@ -3,7 +3,7 @@
 function OpenDatabase()
 {
     mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
-    return mysqli_connect("localhost", "root", "", "CasoEstudioMN");
+    return mysqli_connect("localhost", "root", "root", "CasoEstudioMN");
 }
 
 function CloseDatabase($context)
