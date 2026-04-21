@@ -1,6 +1,6 @@
 <?php
 
-include_once $_SERVER["DOCUMENT_ROOT"] . "/CasoEstudioMN/Models/UtilitarioModel.php";
+include_once dirname(__FILE__) . "/UtilitarioModel.php";
 
 function ConsultarCasasModel()
 {

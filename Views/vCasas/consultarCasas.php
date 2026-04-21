@@ -1,7 +1,7 @@
 <?php 
     // Persona 3: Vista de Consulta de Casas
-    include_once $_SERVER["DOCUMENT_ROOT"] . "/CasoEstudioMN/Views/layout.php";
-    include_once $_SERVER["DOCUMENT_ROOT"] . "/CasoEstudioMN/Controllers/CasasController.php";
+    include_once "../layout.php";
+    include_once "../../Controllers/CasasController.php";
 ?>
 
 <!DOCTYPE html>
@@ -58,6 +58,12 @@
 
     <script>
         $(document).ready(function() {
+            // Construir ruta dinámica basada en la ubicación actual
+            var rutaBase = window.location.pathname.split('/Views/')[0];
+            var urlAjax = rutaBase + '/Controllers/CasasController.php?action=getCasas';
+            
+            console.log("Ruta AJAX:", urlAjax);
+            
             $('#tablaCasas').DataTable({
                 "language": {
                     "url": "https://cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json"
@@ -65,7 +71,7 @@
                 "processing": true,
                 "serverSide": false,
                 "ajax": {
-                    "url": "../../Controllers/CasasController.php?action=getCasas",
+                    "url": urlAjax,
                     "type": "GET",
                     "dataType": "json",
                     "error": function(xhr, status, error) {

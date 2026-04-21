@@ -1,6 +1,6 @@
 <?php
 
-include_once $_SERVER["DOCUMENT_ROOT"] . "/CasoEstudioMN/Models/CasasModel.php";
+include_once dirname(__FILE__) . "/../Models/CasasModel.php";
 
 function ConsultarCasas()
 {
@@ -22,6 +22,17 @@ function ObtenerCasasJSON()
 {
     $datos = ConsultarCasasModel();
     $filas = [];
+    
+    // Debug
+    error_log("Datos obtenidos: " . count($datos) . " registros");
+    error_log("Contenido: " . print_r($datos, true));
+    
+    if (empty($datos)) {
+        // Retornar array vacío pero válido
+        header("Content-Type: application/json");
+        echo json_encode(["data" => []]);
+        exit;
+    }
     
     foreach ($datos as $fila) {
         $estado = "Disponible";
