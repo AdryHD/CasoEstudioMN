@@ -13,6 +13,8 @@ CREATE TABLE IF NOT EXISTS CasasSistema (
     PRIMARY KEY (IdCasa)
 );
 
+TRUNCATE TABLE CasasSistema;
+
 INSERT INTO CasasSistema (DescripcionCasa, PrecioCasa, UsuarioAlquiler, FechaAlquiler)
 VALUES ('Casa en San José', 190000, null, null);
 
@@ -34,12 +36,13 @@ DROP PROCEDURE IF EXISTS SP_ConsultarCasas$$
 CREATE PROCEDURE SP_ConsultarCasas()
 BEGIN
     SELECT
-        IdCasa,
         DescripcionCasa,
         PrecioCasa,
         UsuarioAlquiler,
-        FechaAlquiler
+        CASE WHEN UsuarioAlquiler IS NULL THEN 'Disponible' ELSE 'Reservada' END AS Condicion,
+        DATE_FORMAT(FechaAlquiler, '%d/%m/%Y') AS FechaAlquiler
     FROM CasasSistema
+    WHERE PrecioCasa BETWEEN 115000 AND 180000
     ORDER BY (UsuarioAlquiler IS NOT NULL) ASC, IdCasa ASC;
 END$$
 

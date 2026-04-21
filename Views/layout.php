@@ -24,8 +24,8 @@ function MostrarNav()
     echo
     '<aside class="sidebar-nav-wrapper">
         <div class="navbar-logo">
-            <a href="../vHome/home.php">
-                <img src="../assets/images/logo.svg" alt="logo" />
+            <a href="../vHome/home.php" style="text-decoration: none;">
+                <span style="font-size: 16px; font-weight: 700; color: #365cf5; letter-spacing: 0.5px;">CasoEstudioMN</span>
             </a>
         </div>
         <nav class="sidebar-nav">
@@ -80,7 +80,7 @@ function MostrarFooter()
                 <div class="col-md-6 order-last order-md-first">
                     <div class="copyright text-center text-md-start">
                         <p class="text-sm">
-                            Designed and Developed by MN WEB
+                            Caso de Estudio 2
                         </p>
                     </div>
                 </div>

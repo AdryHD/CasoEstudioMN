@@ -1,5 +1,5 @@
 <?php
-include_once __DIR__ . '/../layout.php';
+    include_once "../layout.php";
 ?>
 
 <!DOCTYPE html>
