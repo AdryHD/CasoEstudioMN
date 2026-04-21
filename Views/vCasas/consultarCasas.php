@@ -64,7 +64,15 @@
                 },
                 "processing": true,
                 "serverSide": false,
-                "ajax": "/CasoEstudioMN/Controllers/CasasController.php?action=getCasas",
+                "ajax": {
+                    "url": "../../Controllers/CasasController.php?action=getCasas",
+                    "type": "GET",
+                    "dataType": "json",
+                    "error": function(xhr, status, error) {
+                        console.log("Error en AJAX:", error);
+                        console.log("Respuesta:", xhr.responseText);
+                    }
+                },
                 "columnDefs": [
                     {"targets": 0, "title": "Descripción"},
                     {"targets": 1, "title": "Precio Mensual"},
