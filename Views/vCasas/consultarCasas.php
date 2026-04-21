@@ -2,9 +2,6 @@
     // Persona 3: Vista de Consulta de Casas
     include_once $_SERVER["DOCUMENT_ROOT"] . "/CasoEstudioMN/Views/layout.php";
     include_once $_SERVER["DOCUMENT_ROOT"] . "/CasoEstudioMN/Controllers/CasasController.php";
-
-    // Llamamos a la función. $datos ahora es un ARRAY según el modelo de P1.
-    $datos = ConsultarCasas();
 ?>
 
 <!DOCTYPE html>
@@ -45,38 +42,6 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <?php
-                                            // Verificar si hay datos disponibles
-                                            if (empty($datos)) {
-                                                echo "<tr><td colspan='5' class='text-center'><p>No hay casas registradas.</p></td></tr>";
-                                            } else {
-                                                // IMPORTANTE: Usamos foreach porque P1 devuelve un array
-                                                foreach ($datos as $fila) {
-                                                
-                                                // Lógica de Estado (Badge verde = Disponible / rojo = Reservada)
-                                                $estado = "Disponible";
-                                                $claseBadge = "status-btn success-btn"; 
-                                                
-                                                if (!empty($fila["UsuarioAlquiler"])) {
-                                                    $estado = "Reservada";
-                                                    $claseBadge = "status-btn close-btn"; 
-                                                }
-
-                                                // Formatear fecha a dd/MM/yyyy
-                                                $fecha = ($fila["FechaAlquiler"] != null) 
-                                                         ? date("d/m/Y", strtotime($fila["FechaAlquiler"])) 
-                                                         : "—";
-
-                                                echo "<tr>";
-                                                echo "<td><p>" . htmlspecialchars($fila["DescripcionCasa"]) . "</p></td>";
-                                                echo "<td><p> ₡" . number_format($fila["PrecioCasa"], 2) . "</p></td>";
-                                                echo "<td><p>" . htmlspecialchars($fila["UsuarioAlquiler"] ?? "N/A") . "</p></td>";
-                                                echo "<td><span class='" . htmlspecialchars($claseBadge) . "'>" . htmlspecialchars($estado) . "</span></td>";
-                                                echo "<td><p>" . htmlspecialchars($fecha) . "</p></td>";
-                                                echo "</tr>";
-                                                }
-                                            }
-                                        ?>
                                     </tbody>
                                 </table>
                             </div>
@@ -96,7 +61,17 @@
             $('#tablaCasas').DataTable({
                 "language": {
                     "url": "https://cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json"
-                }
+                },
+                "processing": true,
+                "serverSide": false,
+                "ajax": "/CasoEstudioMN/Controllers/CasasController.php?action=getCasas",
+                "columnDefs": [
+                    {"targets": 0, "title": "Descripción"},
+                    {"targets": 1, "title": "Precio Mensual"},
+                    {"targets": 2, "title": "Usuario Alquiler"},
+                    {"targets": 3, "title": "Estado", "render": function(data) { return data; }},
+                    {"targets": 4, "title": "Fecha Registro"}
+                ]
             });
         });
     </script>

@@ -17,6 +17,46 @@ function ObtenerPrecioCasa($idCasa)
     return ObtenerPrecioCasaModel($idCasa);
 }
 
+// Endpoint AJAX para DataTables
+function ObtenerCasasJSON()
+{
+    $datos = ConsultarCasasModel();
+    $filas = [];
+    
+    foreach ($datos as $fila) {
+        $estado = "Disponible";
+        $classBadge = "status-btn success-btn";
+        
+        if (!empty($fila["UsuarioAlquiler"])) {
+            $estado = "Reservada";
+            $classBadge = "status-btn close-btn";
+        }
+        
+        $fecha = ($fila["FechaAlquiler"] != null) 
+                 ? date("d/m/Y", strtotime($fila["FechaAlquiler"])) 
+                 : "—";
+        
+        $filas[] = [
+            $fila["DescripcionCasa"],
+            "₡" . number_format($fila["PrecioCasa"], 2),
+            $fila["UsuarioAlquiler"] ?? "N/A",
+            "<span class='" . htmlspecialchars($classBadge) . "'>" . htmlspecialchars($estado) . "</span>",
+            $fecha
+        ];
+    }
+    
+    header("Content-Type: application/json");
+    echo json_encode(["data" => $filas]);
+    exit;
+}
+
+// Manejo de peticiones AJAX
+if (isset($_GET["action"])) {
+    if ($_GET["action"] === "getCasas") {
+        ObtenerCasasJSON();
+    }
+}
+
 if (isset($_POST["btnAlquilar"]))
 {
     if (empty($_POST["IdCasa"]) || empty($_POST["UsuarioAlquiler"]))
